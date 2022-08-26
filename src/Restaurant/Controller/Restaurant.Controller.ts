@@ -1,3 +1,4 @@
+import { Restaurant } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { CreateRestaurantI } from "../../interfaces/CreateRestaurant.I";
 import RestaurantService from "../Services/Restaurant.Service";
@@ -28,6 +29,15 @@ class RestaurantController {
     return res.json(
       await RestaurantService.findRestaurantById(Number(params.restaurant_id))
     );
+  }
+
+  static async updateRestaurantById(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    const restaurant: Restaurant = req.body;
+    res.json(await RestaurantService.updateRestaurantById(restaurant));
   }
 }
 
