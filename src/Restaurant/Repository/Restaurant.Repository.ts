@@ -11,7 +11,7 @@ class RestaurantRepository {
       return await PrismaRestaurant.restaurant.create({
         data: {
           address,
-          image,
+          image, 
           opening_hours,
           name,
         },
