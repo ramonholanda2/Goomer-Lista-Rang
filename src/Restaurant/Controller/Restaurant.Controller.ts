@@ -8,8 +8,8 @@ class RestaurantController {
     next: NextFunction
   ) {
     const body: CreateRestaurantI = req.body;
-    const restaurantCreated = await RestaurantService.createRestaurant(body);
-    return res.status(201).json(restaurantCreated);
+    await RestaurantService.createRestaurant(body);
+    return res.status(201).send();
   }
 }
 
