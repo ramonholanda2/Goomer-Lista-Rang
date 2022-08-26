@@ -12,7 +12,7 @@ function dtoValidationMiddleware(type: any, skipMissingProperties = false): Requ
         if (errors.length > 0) {
           const dtoErrors = errors.map((error: ValidationError) =>
             (Object as any).values(error.constraints)).join(", ");
-          next();
+          next(new Error(JSON.stringify(dtoErrors)));
         } else {
           //sanitize the object and call the next middleware
           sanitize(dtoObj);
