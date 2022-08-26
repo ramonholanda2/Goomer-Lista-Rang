@@ -9,4 +9,6 @@ router.post(
   dtoValidationMiddleware(CreateRestaurantDTO),
   restaurantController.createRestaurant
 );
+router.get("/", restaurantController.findAllRestaurant);
+router.get("/:restaurant_id", restaurantController.findRestaurantById);
 export default router;

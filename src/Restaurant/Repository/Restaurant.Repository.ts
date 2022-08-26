@@ -4,15 +4,22 @@ import { CreateRestaurantI } from "../../interfaces/CreateRestaurant.I";
 
 class RestaurantRepository {
   static async createRestaurant(restaurant: CreateRestaurantI): Promise<void> {
-    try {
-      const { address, image, opening_hours, name } = restaurant;
-      await PrismaRestaurant.$executeRaw`INSERT INTO 
+    const { address, image, opening_hours, name } = restaurant;
+    await PrismaRestaurant.$executeRaw`INSERT INTO 
                 Restaurant(name, address, image, opening_hours) 
                 VALUES 
                 (${name}, ${address}, ${image}, ${opening_hours})`;
-    } catch (err) {
-      new Error();
-    }
+  }
+
+  static async findAllRestaurant(): Promise<Restaurant[]> {
+    return await PrismaRestaurant.$queryRaw<
+      Restaurant[]
+    >`SELECT * FROM Restaurant`;
+  }
+  static async findRestaurantById(restaurant_id: number): Promise<Restaurant> {
+    return await PrismaRestaurant.$queryRaw<
+      Restaurant
+    >`SELECT * FROM Restaurant Where Restaurant.restaurant_id = ${restaurant_id}`;
   }
 }
 

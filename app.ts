@@ -5,6 +5,6 @@ import RestaurantRoutes from "./src/Restaurant/routes/Restaurant.routes"
 const app = express();
 app.use(bodyParser.json());
 
-app.use("/restaurant", RestaurantRoutes)
+app.use("/restaurants", RestaurantRoutes)
 
 export default app;  
