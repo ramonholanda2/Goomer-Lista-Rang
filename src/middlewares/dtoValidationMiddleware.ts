@@ -20,7 +20,7 @@ function dtoValidationMiddleware(type: any, skipMissingProperties = false): Requ
           next();
         }
       }
-    );
+    ); 
   };
 }
 
