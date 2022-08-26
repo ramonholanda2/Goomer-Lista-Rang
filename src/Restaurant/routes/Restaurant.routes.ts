@@ -4,7 +4,7 @@ import restaurantController from "../Controller/Restaurant.Controller";
 import { CreateRestaurantDTO } from "../dto/CreateRestaurant.dto";
 
 const router = express.Router();
-router.get(
+router.post(
   "/",
   dtoValidationMiddleware(CreateRestaurantDTO),
   restaurantController.createRestaurant

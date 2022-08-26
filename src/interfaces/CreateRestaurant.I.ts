@@ -1,6 +1,6 @@
 export interface CreateRestaurantI {
-    name: String,
-    image: String,
-    address: String,
-    opening_hours: String
+    name: string,
+    image: string,
+    address: string,
+    opening_hours: string
 }

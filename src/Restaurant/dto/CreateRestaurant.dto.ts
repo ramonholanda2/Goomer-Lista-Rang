@@ -3,7 +3,7 @@ import { Trim } from "class-sanitizer";
 
 export class CreateRestaurantDTO {
   @Length(10, 20)
-  private title: string;
+  private name: string;
 
   @Trim()
   @MinLength(0)
