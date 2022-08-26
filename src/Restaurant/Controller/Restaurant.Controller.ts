@@ -1,13 +1,15 @@
-import { NextFunction, Request } from "express";
-import { CreateUserDTO } from "../dto/CreateRestaurant.dto";
+import { NextFunction, Request, Response } from "express";
+import { CreateRestaurantI } from "../../interfaces/CreateRestaurant.I";
 class RestaurantController {
-  private async createRestaurant(
+
+  static async createRestaurant(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
-    const body: CreateUserDTO = req.body;
+    const body: CreateRestaurantI = req.body;
     
+    return res.status(200).json(body)
   }
 }
 
