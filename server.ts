@@ -1,8 +1,11 @@
-import app from "./app"
+import app from "./app";
+class Server {
+  private PORT = 8080;
+  public startServer() {
+    app.getApplication().listen(this.PORT, () => {
+      console.log(`rodando na porta ${this.PORT}`);
+    });
+  }
+}
 
-const PORT = 8080;
-
-app.listen(PORT, () => {
-    console.log(`rodando na porta ${PORT}`)
-})
-  
+new Server().startServer();

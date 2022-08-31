@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { CreateRestaurantI } from "../../interfaces/CreateRestaurant.I";
 import RestaurantService from "../Services/Restaurant.Service";
 class RestaurantController {
+  
   static async createRestaurant(
     req: Request,
     res: Response,
@@ -38,6 +39,16 @@ class RestaurantController {
   ) {
     const restaurant: Restaurant = req.body;
     res.json(await RestaurantService.updateRestaurantById(restaurant));
+  }
+
+  static async deleteRestaurantById(
+    { params }: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    res.json(
+      await RestaurantService.deleteRestaurantById(Number(params.restaurant_id))
+    );
   }
 }
 

@@ -1,4 +1,4 @@
-import { IsString, Length, MinLength } from "class-validator";
+import { IsArray, IsString, Length, MinLength } from "class-validator";
 import { Trim } from "class-sanitizer";
 
 export class CreateRestaurantDTO {
@@ -10,10 +10,11 @@ export class CreateRestaurantDTO {
   private image: string;
 
   @Trim()
-  @IsString()
+  @IsString({message: "endereço obrigatorio!"})
   private address: string;
 
   @Trim()
-  @IsString()
+  @IsString({message: "horário aberto obrigatório!"})
+  @IsArray({message: "horário aberto obrigatório2!"})
   private opening_hours: String;
 }

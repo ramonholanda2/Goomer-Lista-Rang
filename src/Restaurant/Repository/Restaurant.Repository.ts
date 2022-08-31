@@ -18,20 +18,26 @@ class RestaurantRepository {
   }
 
   static async findRestaurantById(restaurant_id: number): Promise<Restaurant> {
-    return await PrismaRestaurant.$queryRaw<Restaurant>`SELECT * FROM Restaurant Where Restaurant.restaurant_id = ${restaurant_id}`;
+    const restaurant = await PrismaRestaurant.$queryRaw<
+      Restaurant[]
+    >`SELECT * FROM Restaurant Where Restaurant.restaurant_id = ${restaurant_id}`;
+    return restaurant[0];
   }
 
-  static async updateRestaurantById(
-    restaurant: Restaurant
-  ): Promise<void> { 
-    await PrismaRestaurant.$executeRaw
-    `UPDATE Restaurant SET 
+  static async updateRestaurantById(restaurant: Restaurant): Promise<void> {
+    await PrismaRestaurant.$executeRaw`UPDATE Restaurant SET 
         name = ${restaurant.name}, 
         image = ${restaurant.image}, 
         address = ${restaurant.address}, 
         opening_hours = ${restaurant.opening_hours} 
       WHERE 
         restaurant_id = ${restaurant.restaurant_id}`;
+  }
+
+  static async deleteRestaurantById(restaurant_id: number): Promise<void> {
+    await PrismaRestaurant.$executeRaw` DELETE FROM Restaurant as rt
+      WHERE 
+        rt.restaurant_id = ${restaurant_id}`;
   }
 }
 

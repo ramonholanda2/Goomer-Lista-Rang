@@ -13,4 +13,5 @@ router.post(
 router.get("/", restaurantController.findAllRestaurant);
 router.get("/:restaurant_id", restaurantController.findRestaurantById);
 router.put("/", dtoValidationMiddleware(UpdateRestaurantDTO), restaurantController.updateRestaurantById);
+router.delete("/:restaurant_id", restaurantController.deleteRestaurantById);
 export default router;
