@@ -15,6 +15,5 @@ export class CreateRestaurantDTO {
 
   @Trim()
   @IsString({message: "horário aberto obrigatório!"})
-  @IsArray({message: "horário aberto obrigatório2!"})
   private opening_hours: String;
 }

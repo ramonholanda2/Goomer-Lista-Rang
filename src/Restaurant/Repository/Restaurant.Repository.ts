@@ -3,12 +3,16 @@ import PrismaRestaurant from "../../prisma/PrismaClient";
 import { CreateRestaurantI } from "../../interfaces/CreateRestaurant.I";
 
 class RestaurantRepository {
-  static async createRestaurant(restaurant: CreateRestaurantI): Promise<void> {
+  static async createRestaurant(
+    restaurant: CreateRestaurantI
+  ): Promise<Restaurant> {
     const { address, image, opening_hours, name } = restaurant;
     await PrismaRestaurant.$executeRaw`INSERT INTO 
-                Restaurant(name, address, image, opening_hours) 
+                Restaurant(name, address, image, opening_hours)  
                 VALUES 
-                (${name}, ${address}, ${image}, ${opening_hours})`;
+                (${name}, ${address}, ${image}, ${opening_hours});`;
+
+    return await PrismaRestaurant.$queryRaw`SELECT * FROM Restaurant WHERE restaurant_id = (SELECT MAX(restaurant_id)  FROM Restaurant)`;
   }
 
   static async findAllRestaurant(): Promise<Restaurant[]> {

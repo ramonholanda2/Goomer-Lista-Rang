@@ -3,15 +3,29 @@ import dtoValidationMiddleware from "../../middlewares/dtoValidationMiddleware";
 import restaurantController from "../Controller/Restaurant.Controller";
 import { CreateRestaurantDTO } from "../dto/CreateRestaurant.dto";
 import { UpdateRestaurantDTO } from "../dto/UpdateRestaurant.dto";
+import Router from "../../interfaces/Router.interface";
 
-const router = express.Router();
-router.post(
-  "/",
-  dtoValidationMiddleware(CreateRestaurantDTO),
-  restaurantController.createRestaurant
-);
-router.get("/", restaurantController.findAllRestaurant);
-router.get("/:restaurant_id", restaurantController.findRestaurantById);
-router.put("/", dtoValidationMiddleware(UpdateRestaurantDTO), restaurantController.updateRestaurantById);
-router.delete("/:restaurant_id", restaurantController.deleteRestaurantById);
-export default router;
+class RestaurantRouter implements Router {
+  public router: express.Router = express.Router();
+
+  constructor() {
+    this.router.post(
+      "/",
+      dtoValidationMiddleware(CreateRestaurantDTO),
+      restaurantController.createRestaurant
+    );
+    this.router.get("/", restaurantController.findAllRestaurant);
+    this.router.get("/:restaurant_id", restaurantController.findRestaurantById);
+    this.router.put(
+      "/",
+      dtoValidationMiddleware(UpdateRestaurantDTO),
+      restaurantController.updateRestaurantById
+    );
+    this.router.delete(
+      "/:restaurant_id",
+      restaurantController.deleteRestaurantById
+    );
+  }
+}
+
+export default new RestaurantRouter();

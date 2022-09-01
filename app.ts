@@ -7,7 +7,7 @@ class App {
 
   constructor() {
     this.Application.use(bodyParser.json());
-    this.Application.use("/restaurants", RestaurantRoutes);
+    this.Application.use("/restaurants", RestaurantRoutes.router);
     this.Application.use(CatchErrorsHTTP);
   }
 
