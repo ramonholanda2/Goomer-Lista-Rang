@@ -3,7 +3,9 @@ import restaurantRepository from "../Repository/Restaurant.Repository";
 import { Restaurant } from "@prisma/client";
 
 class RestaurantService {
-  static async createRestaurant(restaurant: CreateRestaurantI): Promise<Restaurant> {
+  static async createRestaurant(
+    restaurant: CreateRestaurantI
+  ): Promise<Restaurant> {
     return await restaurantRepository.createRestaurant(restaurant);
   }
 

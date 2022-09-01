@@ -12,7 +12,10 @@ class RestaurantRepository {
                 VALUES 
                 (${name}, ${address}, ${image}, ${opening_hours});`;
 
-    return await PrismaRestaurant.$queryRaw`SELECT * FROM Restaurant WHERE restaurant_id = (SELECT MAX(restaurant_id)  FROM Restaurant)`;
+    const restaurantCreated = await PrismaRestaurant.$queryRaw<
+      Restaurant[]
+    >`SELECT * FROM Restaurant WHERE restaurant_id = (SELECT MAX(restaurant_id)  FROM Restaurant)`;
+    return restaurantCreated[0];
   }
 
   static async findAllRestaurant(): Promise<Restaurant[]> {

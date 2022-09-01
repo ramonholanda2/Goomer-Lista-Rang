@@ -12,7 +12,7 @@ datasource db {
 
 model Restaurant {
   restaurant_id      Int                  @id @default(autoincrement())
-  name               String               @unique
+  name               String
   image              String
   address            String
   opening_hours      String
@@ -21,7 +21,7 @@ model Restaurant {
 
 model Product {
   product_id         Int                  @id @default(autoincrement())
-  name               String               
+  name               String
   image              String
   price              Decimal
   category           String

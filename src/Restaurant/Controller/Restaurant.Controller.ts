@@ -44,7 +44,7 @@ class RestaurantController {
     res: Response,
     next: NextFunction
   ) {
-    res.json(
+    res.status(204).json(
       await RestaurantService.deleteRestaurantById(Number(params.restaurant_id))
     );
   }
