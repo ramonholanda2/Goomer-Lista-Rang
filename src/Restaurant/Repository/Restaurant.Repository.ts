@@ -24,7 +24,8 @@ class RestaurantRepository {
     >`SELECT * FROM Restaurant`;
   }
 
-  static async findRestaurantById(restaurant_id: number): Promise<Restaurant> {
+  static async findRestaurantById(restaurant_id: string): Promise<Restaurant> {
+    throw new Error("sdasd")
     const restaurant = await PrismaRestaurant.$queryRaw<
       Restaurant[]
     >`SELECT * FROM Restaurant Where Restaurant.restaurant_id = ${restaurant_id}`;
@@ -41,7 +42,7 @@ class RestaurantRepository {
         restaurant_id = ${restaurant.restaurant_id}`;
   }
 
-  static async deleteRestaurantById(restaurant_id: number): Promise<void> {
+  static async deleteRestaurantById(restaurant_id: string): Promise<void> {
     await PrismaRestaurant.$executeRaw` DELETE FROM Restaurant as rt
       WHERE 
         rt.restaurant_id = ${restaurant_id}`;

@@ -25,9 +25,14 @@ class RestaurantController {
     res: Response,
     next: NextFunction
   ) {
-    return res.json(
-      await RestaurantService.findRestaurantById(Number(params.restaurant_id))
-    );
+    try {
+      return res.json(
+        
+        await RestaurantService.findRestaurantById(params.restaurant_id)
+      );
+    } catch (err) {
+      next(err);
+    }
   }
 
   static async updateRestaurantById(
@@ -44,9 +49,13 @@ class RestaurantController {
     res: Response,
     next: NextFunction
   ) {
-    res.status(204).json(
-      await RestaurantService.deleteRestaurantById(Number(params.restaurant_id))
-    );
+    res
+      .status(204)
+      .json(
+        await RestaurantService.deleteRestaurantById(
+          params.restaurant_id
+        )
+      );
   }
 }
 

@@ -1,4 +1,6 @@
 import { NextFunction, Request, Response } from "express";
+import ControllerExceptionHandler from "../Exception/ControllerExceptionHandler ";
+import StandardError from "../Exception/StandardError";
 
 async function CatchErrorsHTTP(
   err: Error,
@@ -7,15 +9,10 @@ async function CatchErrorsHTTP(
   next: NextFunction
 ) {
   if (err instanceof Error) {
-    return res
-      .status(res.statusCode)
-      .json({ error: err.message.split(","), timestamp: new Date().getTime() });
+    return new ControllerExceptionHandler(err, req, res, next);
   }
 
-  return res.status(500).json({
-    status: "500",
-    message: "Server Internal Error",
-  });
+  return res.status(500).json(new StandardError("Server Internal Error", 500));
 }
 
 export default CatchErrorsHTTP;

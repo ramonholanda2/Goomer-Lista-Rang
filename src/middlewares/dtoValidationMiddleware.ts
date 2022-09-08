@@ -3,6 +3,7 @@ import { plainToClass } from "class-transformer";
 import { validate, ValidationError } from "class-validator";
 import { sanitize } from "class-sanitizer";
 import ThrowNewError from "../utils/CreateNewError";
+import ArgumentNotValidException from "../Exceptions/ArgumentNotValidException";
 
 function dtoValidationMiddleware(
   type: any,
@@ -25,13 +26,10 @@ function dtoValidationMiddleware(
           });
 
           next(
-            ThrowNewError(
-              res,
-              400,
+            new ArgumentNotValidException(
               errorMessage.substring(0, errorMessage.length - 1)
             )
           );
-          
         } else {
           //sanitize the object and call the next middleware
           sanitize(dtoObj);
