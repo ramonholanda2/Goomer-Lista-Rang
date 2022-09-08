@@ -25,7 +25,6 @@ class RestaurantRepository {
   }
 
   static async findRestaurantById(restaurant_id: string): Promise<Restaurant> {
-    throw new Error("sdasd")
     const restaurant = await PrismaRestaurant.$queryRaw<
       Restaurant[]
     >`SELECT * FROM Restaurant Where Restaurant.restaurant_id = ${restaurant_id}`;

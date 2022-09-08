@@ -19,15 +19,18 @@ export default class ControllerExceptionHandler {
     this.request = request;
     this.response = response;
     this.next = next;
+
     this.callCustomClassError();
   }
 
   private callCustomClassError(): void | Response<StandardError> {
     if (this.error instanceof NotFoundException) {
       this.notFoundException();
-    } else if (this.error instanceof ArgumentNotValidException) {
+    } 
+    else if (this.error instanceof ArgumentNotValidException) {
       this.argumentNotValidException();
-    } else {
+    } 
+    else {
       const standardError = new StandardError(this.error.message, 500);
       return this.response
         .status(standardError.getStatus())

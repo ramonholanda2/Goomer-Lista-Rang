@@ -12,7 +12,7 @@ async function CatchErrorsHTTP(
     return new ControllerExceptionHandler(err, req, res, next);
   }
 
-  return res.status(500).json(new StandardError("Server Internal Error", 500));
+  return res.status(500).send(new StandardError("server internal Error", 500));
 }
 
 export default CatchErrorsHTTP;

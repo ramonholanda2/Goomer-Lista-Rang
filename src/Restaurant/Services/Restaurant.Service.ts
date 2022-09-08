@@ -1,7 +1,7 @@
 import { CreateRestaurantI } from "../../interfaces/CreateRestaurant.I";
 import restaurantRepository from "../Repository/Restaurant.Repository";
 import { Restaurant } from "@prisma/client";
-import NotFound from "../../Exceptions/NotFoundException";
+import NotFoundException from "../../Exceptions/NotFoundException";
 
 class RestaurantService {
   static async createRestaurant(
@@ -14,14 +14,18 @@ class RestaurantService {
     return await restaurantRepository.findAllRestaurant();
   }
 
-  static async findRestaurantById(restaurant_id: string): Promise<Restaurant | NotFound> {
-    const restaurant = await restaurantRepository.findRestaurantById(restaurant_id);
+  static async findRestaurantById(restaurant_id: string): Promise<Restaurant> {
+    const restaurant = await restaurantRepository.findRestaurantById(
+      restaurant_id
+    );
 
-    if(!restaurant) {
-      throw new NotFound(`restaurante com o id ${restaurant_id} não encontrado`)
+    if (!restaurant) {
+      throw new NotFoundException(
+        `restaurante com o id ${restaurant_id} não encontrado`
+      );
     }
-    
-    return restaurant
+
+    return restaurant;
   }
 
   static async updateRestaurantById(restaurant: Restaurant): Promise<void> {
