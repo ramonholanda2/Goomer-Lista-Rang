@@ -3,34 +3,37 @@ import { CreateProductI } from "../../interfaces/CreateProduct.interface";
 import { ProductService } from "../service/Product.service";
 
 export class ProductController {
-    static async createProductForRestaurant(
-        req: Request,
-        res: Response,
-        next: NextFunction
-      ) {
-        try {
-          const body: CreateProductI = req.body;
-          return res
-            .status(201)
-            .send(await ProductService.createProductForRestaurant(body));
-        } catch (err) {
-          next(err);
-        }
-      }
-    
-   /*    static async findRestaurantById(
-        { params }: Request,
-        res: Response,
-        next: NextFunction
-      ) {
-        try {
-          return res.json(
-            await RestaurantService.findRestaurantById(params.restaurant_id)
-          );
-        } catch (err) {
-          next(err);
-        }
-      }
+  static async createProductForRestaurant(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const body: CreateProductI = req.body;
+      return res
+        .status(201)
+        .send(await ProductService.createProductForRestaurant(body));
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async findProductByRestaurant(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      return res.json(
+        await ProductService.findProductByRestaurant(
+          String(req.query.restaurant_id)
+        )
+      );
+    } catch (err) {
+      next(err);
+    }
+  }
+  /*
     
       static async updateRestaurantById(
         req: Request,

@@ -17,4 +17,12 @@ export class ProductRepository {
     >`SELECT * FROM Product WHERE product_id = (SELECT MAX(product_id)  FROM Product)`;
     return productCreated[0];
   }
+
+  static async findProductByRestaurant(
+    restaurant_id: string
+  ): Promise<Product[]> {
+    return await PrismaProduct.$queryRaw<
+      Product[]
+    >`SELECT * FROM Product WHERE Product.restaurant_id = ${restaurant_id}`;
+  }
 }
