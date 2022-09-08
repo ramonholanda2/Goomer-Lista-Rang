@@ -11,31 +11,23 @@ datasource db {
 }
 
 model Restaurant {
-  restaurant_id      Int                  @id @default(autoincrement())
-  name               String
-  image              String
-  address            String
-  opening_hours      String
-  RestaurantOProduct RestaurantOProduct[]
+  restaurant_id Int       @id @default(autoincrement())
+  name          String
+  image         String
+  address       String
+  opening_hours String
+  products      Product[]
 }
 
 model Product {
-  product_id         Int                  @id @default(autoincrement())
-  name               String
-  image              String
-  price              Decimal
-  category           String
-  RestaurantOProduct RestaurantOProduct[]
-  promotions         Promotion[]
-}
-
-model RestaurantOProduct {
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [restaurant_id])
-  restaurantId Int
-  product      Product    @relation(fields: [productId], references: [product_id])
-  productId    Int
-
-  @@id([restaurantId, productId])
+  product_id    Int         @id @default(autoincrement())
+  restaurant_id Int
+  name          String
+  image         String
+  price         Decimal
+  category      String
+  restaurant    Restaurant  @relation(fields: [restaurant_id], references: [restaurant_id])
+  promotions    Promotion[]
 }
 
 model Promotion {

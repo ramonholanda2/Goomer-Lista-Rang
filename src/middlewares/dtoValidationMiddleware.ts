@@ -1,8 +1,7 @@
 import { RequestHandler } from "express";
+import { sanitize } from "class-sanitizer";
 import { plainToClass } from "class-transformer";
 import { validate, ValidationError } from "class-validator";
-import { sanitize } from "class-sanitizer";
-import ThrowNewError from "../utils/CreateNewError";
 import ArgumentNotValidException from "../Exceptions/ArgumentNotValidException";
 
 function dtoValidationMiddleware(
