@@ -29,7 +29,13 @@ class RestaurantService {
   }
 
   static async updateRestaurantById(restaurant: Restaurant): Promise<void> {
-    return await restaurantRepository.updateRestaurantById(restaurant);
+    try {
+      await this.findRestaurantById(String(restaurant.restaurant_id));
+      return await restaurantRepository.updateRestaurantById(restaurant);
+    }
+    catch(err) {
+      throw err
+    }
   }
 
   static async deleteRestaurantById(restaurant_id: string): Promise<void> {

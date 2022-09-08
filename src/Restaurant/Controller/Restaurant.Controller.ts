@@ -8,8 +8,14 @@ class RestaurantController {
     res: Response,
     next: NextFunction
   ) {
-    const body: CreateRestaurantI = req.body;
-    return res.status(201).send(await RestaurantService.createRestaurant(body));
+    try {
+      const body: CreateRestaurantI = req.body;
+      return res
+        .status(201)
+        .send(await RestaurantService.createRestaurant(body));
+    } catch (err) {
+      next(err);
+    }
   }
 
   static async findAllRestaurant(
@@ -17,7 +23,11 @@ class RestaurantController {
     res: Response,
     next: NextFunction
   ) {
-    return res.json(await RestaurantService.findAllRestaurant());
+    try {
+      return res.json(await RestaurantService.findAllRestaurant());
+    } catch (err) {
+      next(err);
+    }
   }
 
   static async findRestaurantById(
@@ -27,7 +37,6 @@ class RestaurantController {
   ) {
     try {
       return res.json(
-        
         await RestaurantService.findRestaurantById(params.restaurant_id)
       );
     } catch (err) {
@@ -40,8 +49,12 @@ class RestaurantController {
     res: Response,
     next: NextFunction
   ) {
-    const restaurant: Restaurant = req.body;
-    res.json(await RestaurantService.updateRestaurantById(restaurant));
+    try {
+      const restaurant: Restaurant = req.body;
+      res.status(204).send(await RestaurantService.updateRestaurantById(restaurant));
+    } catch (err) {
+      next(err);
+    }
   }
 
   static async deleteRestaurantById(
@@ -49,13 +62,15 @@ class RestaurantController {
     res: Response,
     next: NextFunction
   ) {
-    res
-      .status(204)
-      .json(
-        await RestaurantService.deleteRestaurantById(
-          params.restaurant_id
-        )
-      );
+    try {
+      res
+        .status(204)
+        .json(
+          await RestaurantService.deleteRestaurantById(params.restaurant_id)
+        );
+    } catch (err) {
+      next(err);
+    }
   }
 }
 
