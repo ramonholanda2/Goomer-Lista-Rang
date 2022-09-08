@@ -29,19 +29,16 @@ class RestaurantService {
   }
 
   static async updateRestaurantById(restaurant: Restaurant): Promise<void> {
-    try {
-      await this.findRestaurantById(String(restaurant.restaurant_id));
-      return await restaurantRepository.updateRestaurantById(restaurant);
-    }
-    catch(err) {
-      throw err
-    }
+    await this.findRestaurantById(String(restaurant.restaurant_id));
+    return await restaurantRepository.updateRestaurantById(restaurant);
   }
 
   static async deleteRestaurantById(restaurant_id: string): Promise<void> {
     const restaurant = await this.findRestaurantById(restaurant_id);
     if (!restaurant) {
-      console.log(`este restaurante não foi encontrado - id: ${restaurant_id}`);
+      throw new NotFoundException(
+        `restaurante com o id ${restaurant_id} não encontrado`
+      );
     }
     await restaurantRepository.deleteRestaurantById(restaurant_id);
   }
