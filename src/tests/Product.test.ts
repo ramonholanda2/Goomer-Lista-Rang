@@ -55,7 +55,7 @@ describe("Product", () => {
     });
   });
 
-  describe("find products for restaurant", () => {
+  describe("update product for restaurant", () => {
     it("return status 204 and update product", async () => {
       const { restaurant_id } = await RestaurantService.createRestaurant(
         restaurantPayload
@@ -87,6 +87,32 @@ describe("Product", () => {
         restaurant_id
       );
       await RestaurantService.deleteRestaurantById(String(restaurant_id));
+    });
+  });
+
+  describe("delete product for restaurant", () => {
+    it("return status 204 and delete product", async () => {
+      const { restaurant_id } = await RestaurantService.createRestaurant(
+        restaurantPayload
+      );
+
+      const createProduct = { ...createProductPayload, product_id: Number() };
+      createProduct.restaurant_id = restaurant_id;
+
+      const { product_id } = await ProductService.createProductForRestaurant(
+        createProduct
+      );
+
+      await supertest(app.getApplication())
+      .delete(`/products/${product_id}`)
+      .send({restaurant_id: restaurant_id}).expect(204)
+
+      await supertest(app.getApplication())
+      .get(`/products/${product_id}`)
+      .send({restaurant_id: restaurant_id}).expect(404)
+      
+      await RestaurantService.deleteRestaurantById(String(restaurant_id))
+
     });
   });
 });
