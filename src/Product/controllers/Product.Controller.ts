@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { CreateProductI } from "../../interfaces/CreateProduct.interface";
+import { CreateProductDTO } from "../dto/CreateProductDTO";
 import { ProductService } from "../service/Product.service";
 
 export class ProductController {
@@ -9,7 +9,7 @@ export class ProductController {
     next: NextFunction
   ) {
     try {
-      const body: CreateProductI = req.body;
+      const body: CreateProductDTO = req.body;
       return res
         .status(201)
         .send(await ProductService.createProductForRestaurant(body));
@@ -33,34 +33,25 @@ export class ProductController {
       next(err);
     }
   }
-  /*
-    
-      static async updateRestaurantById(
-        req: Request,
-        res: Response,
-        next: NextFunction
-      ) {
-        try {
-          const restaurant: Restaurant = req.body;
-          res.status(204).send(await RestaurantService.updateRestaurantById(restaurant));
-        } catch (err) {
-          next(err);
-        }
-      }
-    
-      static async deleteRestaurantById(
-        { params }: Request,
-        res: Response,
-        next: NextFunction
-      ) {
-        try {
-          res
-            .status(204)
-            .json(
-              await RestaurantService.deleteRestaurantById(params.restaurant_id)
-            );
-        } catch (err) {
-          next(err);
-        }
-      } */
+
+  static async updateProductByRestaurant(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const updateProductByRestaurantPayload: CreateProductDTO =
+        req.body;
+      return res
+        .status(204)
+        .send(
+          await ProductService.updateProductByRestaurant(
+            req.params.product_id,
+            updateProductByRestaurantPayload
+          )
+        );
+    } catch (err) {
+      next(err);
+    }
+  }
 }

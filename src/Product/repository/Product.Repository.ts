@@ -1,10 +1,10 @@
 import { Product } from "@prisma/client";
 import PrismaProduct from "../../prisma/PrismaClient";
-import { CreateProductI } from "../../interfaces/CreateProduct.interface";
+import { CreateProductDTO } from "../dto/CreateProductDTO";
 
 export class ProductRepository {
   static async createProductForRestaurant(
-    product: CreateProductI
+    product: CreateProductDTO
   ): Promise<Product> {
     const { category, restaurant_id, image, name, price } = product;
     await PrismaProduct.$executeRaw`INSERT INTO 
@@ -24,5 +24,18 @@ export class ProductRepository {
     return await PrismaProduct.$queryRaw<
       Product[]
     >`SELECT * FROM Product WHERE Product.restaurant_id = ${restaurant_id}`;
+  }
+
+  static async updateProductByRestaurant(
+    product_id: string,
+    product: CreateProductDTO
+  ) {
+    await PrismaProduct.$executeRaw<void>`UPDATE Product SET 
+    name = ${product.name}, 
+    image = ${product.image}, 
+    category = ${product.category}, 
+    price = ${product.price} 
+  WHERE 
+    product_id = ${product_id}`;
   }
 }

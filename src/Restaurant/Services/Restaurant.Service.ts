@@ -1,11 +1,11 @@
-import { CreateRestaurantI } from "../../interfaces/CreateRestaurant.I";
 import restaurantRepository from "../Repository/Restaurant.Repository";
 import { Restaurant } from "@prisma/client";
 import NotFoundException from "../../Exceptions/NotFoundException";
+import { CreateRestaurantDTO } from "../dto/CreateRestaurant.dto";
 
 class RestaurantService {
   static async createRestaurant(
-    restaurant: CreateRestaurantI
+    restaurant: CreateRestaurantDTO
   ): Promise<Restaurant> {
     return await restaurantRepository.createRestaurant(restaurant);
   }

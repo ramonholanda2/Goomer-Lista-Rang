@@ -1,10 +1,10 @@
 import { Restaurant } from "@prisma/client";
 import PrismaRestaurant from "../../prisma/PrismaClient";
-import { CreateRestaurantI } from "../../interfaces/CreateRestaurant.I";
+import { CreateRestaurantDTO } from "../dto/CreateRestaurant.dto";
 
 class RestaurantRepository {
   static async createRestaurant(
-    restaurant: CreateRestaurantI
+    restaurant: CreateRestaurantDTO
   ): Promise<Restaurant> {
     const { address, image, opening_hours, name } = restaurant;
     await PrismaRestaurant.$executeRaw`INSERT INTO 

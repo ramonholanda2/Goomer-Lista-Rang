@@ -12,6 +12,11 @@ class ProductRouter implements Router {
       dtoValidationMiddleware(CreateProductDTO),
       ProductController.createProductForRestaurant
     );
+    this.router.put(
+      "/:product_id",
+      dtoValidationMiddleware(CreateProductDTO),
+      ProductController.updateProductByRestaurant
+    );
     this.router.get(
       "/",
       ProductController.findProductByRestaurant

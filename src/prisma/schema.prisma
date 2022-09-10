@@ -24,7 +24,7 @@ model Product {
   restaurant_id Int
   name          String
   image         String
-  price         Decimal
+  price         Int
   category      String
   restaurant    Restaurant  @relation(fields: [restaurant_id], references: [restaurant_id])
   promotions    Promotion[]
