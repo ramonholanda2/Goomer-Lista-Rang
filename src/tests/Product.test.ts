@@ -55,5 +55,38 @@ describe("Product", () => {
     });
   });
 
-  
+  describe("find products for restaurant", () => {
+    it("return status 204 and update product", async () => {
+      const { restaurant_id } = await RestaurantService.createRestaurant(
+        restaurantPayload
+      );
+
+      const createProduct = { ...createProductPayload, product_id: Number() };
+      createProduct.restaurant_id = restaurant_id;
+
+      const { product_id } = await ProductService.createProductForRestaurant(
+        createProduct
+      );
+
+      updateProductPayload.product_id = product_id;
+      updateProductPayload.restaurant_id = restaurant_id;
+
+      const { body, statusCode } = await supertest(app.getApplication())
+        .put(`/products/${product_id}`)
+        .send(updateProductPayload);
+
+      const productUpdated = await ProductService.findProductById(
+        String(product_id)
+      );
+
+      expect(statusCode).toBe(204);
+      expect(updateProductPayload).toEqual(productUpdated);
+
+      await ProductService.deleteProductByRestaurant(
+        String(product_id),
+        restaurant_id
+      );
+      await RestaurantService.deleteRestaurantById(String(restaurant_id));
+    });
+  });
 });
