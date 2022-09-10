@@ -44,4 +44,11 @@ export class ProductRepository {
     WHERE 
     pd.product_id = ${product_id}`;
   }
+
+  static async findProductById(product_id: string): Promise<Product> {
+    const product = await PrismaProduct.$queryRaw<Product[]>`Select * FROM Product as pd 
+    WHERE 
+    pd.product_id = ${product_id}`;
+    return product[0]
+  }
 }
