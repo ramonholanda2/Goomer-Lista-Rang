@@ -38,4 +38,10 @@ export class ProductRepository {
   WHERE 
     product_id = ${product_id}`;
   }
+
+  static async deleteProductByRestaurant(product_id: string) {
+    await PrismaProduct.$executeRaw<void>`DELETE FROM Product as pd 
+    WHERE 
+    pd.product_id = ${product_id}`;
+  }
 }

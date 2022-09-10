@@ -3,6 +3,7 @@ import Router from "../../interfaces/Router.interface";
 import dtoValidationMiddleware from "../../middlewares/dtoValidationMiddleware";
 import { ProductController } from "../controllers/Product.Controller";
 import { CreateProductDTO } from "../dto/CreateProductDTO";
+import { DeleteProductDTO } from "../dto/DeleteProductDTO";
 
 class ProductRouter implements Router {
   public router: express.Router = express.Router();
@@ -16,6 +17,11 @@ class ProductRouter implements Router {
       "/:product_id",
       dtoValidationMiddleware(CreateProductDTO),
       ProductController.updateProductByRestaurant
+    );
+    this.router.delete(
+      "/:product_id",
+      dtoValidationMiddleware(DeleteProductDTO),
+      ProductController.deleteProductByRestaurant
     );
     this.router.get(
       "/",

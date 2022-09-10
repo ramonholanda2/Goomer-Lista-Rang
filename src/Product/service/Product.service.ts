@@ -25,4 +25,12 @@ export class ProductService {
     await RestaurantService.findRestaurantById(String(product.restaurant_id));
     await ProductRepository.updateProductByRestaurant(product_id, product);
   }
+
+  static async deleteProductByRestaurant(
+    product_id: string,
+    restaurant_id: number
+  ): Promise<void> {
+    await RestaurantService.findRestaurantById(String(restaurant_id));
+    await ProductRepository.deleteProductByRestaurant(product_id);
+  }
 }
