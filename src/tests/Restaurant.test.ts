@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import { describe, it, expect } from "@jest/globals";
-import app from "../../../app";
-import RestaurantService from "../Services/Restaurant.Service";
+import app from "../../app";
+import RestaurantService from "../Restaurant/Services/Restaurant.Service";
 
 const restaurantPayload = {
   name: "teste",
