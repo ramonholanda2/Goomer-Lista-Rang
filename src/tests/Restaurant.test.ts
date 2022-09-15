@@ -41,13 +41,11 @@ describe("Restaurant", () => {
       expect(statusCode).toBe(200);
       expect(body.restaurant_id).toBe(restaurant.restaurant_id);
 
-      await RestaurantService.deleteRestaurantById(
-        String(restaurant.restaurant_id)
-      );
+      await RestaurantService.deleteRestaurantById(restaurant.restaurant_id);
     });
   });
 
-  describe("create restaurant route", () => {
+   describe("create restaurant route", () => {
     it("return status 201 and create restaurant", async () => {
       const { body, statusCode } = await supertest(app.getApplication())
         .post(`/restaurants`)
@@ -58,6 +56,8 @@ describe("Restaurant", () => {
       await RestaurantService.deleteRestaurantById(body.restaurant_id);
     });
   });
+
+ 
 
   describe("update restaurant route", () => {
     it("return status 204 and update restaurant", async () => {
@@ -74,11 +74,11 @@ describe("Restaurant", () => {
       expect(statusCode).toBe(204);
 
       await RestaurantService.deleteRestaurantById(
-        String(restaurant.restaurant_id)
+        restaurant.restaurant_id
       );
     });
   });
-
+ 
   describe("delete restaurant route", () => {
     it("return status 204 and delete restaurant", async () => {
       const restaurant = await RestaurantService.createRestaurant(
@@ -88,5 +88,5 @@ describe("Restaurant", () => {
         .delete(`/restaurants/${restaurant.restaurant_id}`)
         .expect(204);
     });
-  });
+  }); 
 });

@@ -29,7 +29,7 @@ const updateProductPayload = {
 };
 
 describe("Product", () => {
-  describe("create product for restaurant", () => {
+   describe("create product for restaurant", () => {
     it("create product and return status 201", async () => {
       const { restaurant_id } = await RestaurantService.createRestaurant(
         restaurantPayload
@@ -51,7 +51,7 @@ describe("Product", () => {
         body.product_id,
         restaurant_id
       );
-      await RestaurantService.deleteRestaurantById(String(restaurant_id));
+      await RestaurantService.deleteRestaurantById(restaurant_id);
     });
   });
 
@@ -76,19 +76,19 @@ describe("Product", () => {
         .send(updateProductPayload);
 
       const productUpdated = await ProductService.findProductById(
-        String(product_id)
+        product_id
       );
 
       expect(statusCode).toBe(204);
       expect(updateProductPayload).toEqual(productUpdated);
 
       await ProductService.deleteProductByRestaurant(
-        String(product_id),
+        product_id,
         restaurant_id
       );
-      await RestaurantService.deleteRestaurantById(String(restaurant_id));
+      await RestaurantService.deleteRestaurantById(restaurant_id);
     });
-  });
+  }); 
 
   describe("delete product for restaurant", () => {
     it("return status 204 and delete product", async () => {
@@ -104,15 +104,16 @@ describe("Product", () => {
       );
 
       await supertest(app.getApplication())
-      .delete(`/products/${product_id}`)
-      .send({restaurant_id: restaurant_id}).expect(204)
+        .delete(`/products/${product_id}`)
+        .send({ restaurant_id: restaurant_id })
+        .expect(204);
 
       await supertest(app.getApplication())
-      .get(`/products/${product_id}`)
-      .send({restaurant_id: restaurant_id}).expect(404)
-      
-      await RestaurantService.deleteRestaurantById(String(restaurant_id))
+        .get(`/products/${product_id}`)
+        .send({ restaurant_id: restaurant_id })
+        .expect(404);
 
+      await RestaurantService.deleteRestaurantById(restaurant_id);
     });
-  });
+  }); 
 });

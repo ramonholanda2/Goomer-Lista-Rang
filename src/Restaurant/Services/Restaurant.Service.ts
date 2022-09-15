@@ -14,7 +14,7 @@ class RestaurantService {
     return await restaurantRepository.findAllRestaurant();
   }
 
-  static async findRestaurantById(restaurant_id: string): Promise<Restaurant> {
+  static async findRestaurantById(restaurant_id: number): Promise<Restaurant> {
     const restaurant = await restaurantRepository.findRestaurantById(
       restaurant_id
     );
@@ -29,11 +29,11 @@ class RestaurantService {
   }
 
   static async updateRestaurantById(restaurant: Restaurant): Promise<void> {
-    await this.findRestaurantById(String(restaurant.restaurant_id));
+    await this.findRestaurantById(restaurant.restaurant_id);
     return await restaurantRepository.updateRestaurantById(restaurant);
   }
 
-  static async deleteRestaurantById(restaurant_id: string): Promise<void> {
+  static async deleteRestaurantById(restaurant_id: number): Promise<void> {
     const restaurant = await this.findRestaurantById(restaurant_id);
     if (!restaurant) {
       throw new NotFoundException(

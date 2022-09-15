@@ -37,7 +37,7 @@ class RestaurantController {
   ) {
     try {
       return res.json(
-        await RestaurantService.findRestaurantById(params.restaurant_id)
+        await RestaurantService.findRestaurantById(Number(params.restaurant_id))
       );
     } catch (err) {
       next(err);
@@ -66,7 +66,7 @@ class RestaurantController {
       res
         .status(204)
         .json(
-          await RestaurantService.deleteRestaurantById(params.restaurant_id)
+          await RestaurantService.deleteRestaurantById(Number(params.restaurant_id))
         );
     } catch (err) {
       next(err);

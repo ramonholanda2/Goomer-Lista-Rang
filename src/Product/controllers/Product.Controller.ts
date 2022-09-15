@@ -27,7 +27,7 @@ export class ProductController {
     try {
       return res.json(
         await ProductService.findProductByRestaurant(
-          String(req.query.restaurant_id)
+          Number(req.query.restaurant_id)
         )
       );
     } catch (err) {
@@ -46,7 +46,7 @@ export class ProductController {
         .status(204)
         .send(
           await ProductService.updateProductByRestaurant(
-            req.params.product_id,
+            Number(req.params.product_id),
             updateProductByRestaurantPayload
           )
         );
@@ -67,7 +67,7 @@ export class ProductController {
         .status(204)
         .send(
           await ProductService.deleteProductByRestaurant(
-            product_id,
+            Number(product_id),
             restaurant_id
           )
         );
