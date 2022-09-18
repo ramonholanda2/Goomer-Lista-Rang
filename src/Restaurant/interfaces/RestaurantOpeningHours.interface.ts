@@ -1,4 +1,3 @@
-import { DAYS_WEEK } from "@prisma/client";
 
 export interface RestaurantOpeningHoursI {
     restaurant_id: number;
@@ -6,8 +5,8 @@ export interface RestaurantOpeningHoursI {
     image: string;
     address: string;
     opening_hours?: {
-        of: string;
-        to: string;
-        in: DAYS_WEEK[];
+        hour_open: string; 
+        hour_close: string;
+        days_week: string[];
     }
 }

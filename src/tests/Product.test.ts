@@ -3,7 +3,8 @@ import supertest from "supertest";
 import app from "../../app";
 import { ProductService } from "../Product/service/Product.service";
 import RestaurantService from "../Restaurant/Services/Restaurant.Service";
-import { DAYS_WEEK, OpeningHours } from "@prisma/client";
+import { OpeningHours } from "@prisma/client";
+import { OpeningHoursDTO } from "../Restaurant/dto/OpeningHoursDTO";
 
 
 
@@ -11,10 +12,10 @@ const restaurantPayload = {
   name: "teste",
   image: "imagem12345",
   address: "endereço 233",
-  opening_hours:<OpeningHours> {
-    of: "08:00",
-    to: "18:00",
-    in: [],
+  opening_hours:<OpeningHoursDTO> {
+    hour_open: "08:00",
+    hour_close: "18:00",
+    days_week: ["DOMINGO"],
   }
 };
 

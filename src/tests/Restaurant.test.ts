@@ -9,11 +9,11 @@ const restaurantPayload = {
   name: "teste",
   image: "imagem12345",
   address: "endereço 233",
-  opening_hours: {
+  opening_hours:<OpeningHoursDTO> {
     restaurant_id: Number(),
-    of: "8:00",
-    to: "15:00",
-    in: ["DOMINGO"],
+    hour_open: "08:00",
+    hour_close: "18:00",
+    days_week: ["DOMINGO"],
   }
 };
 
@@ -23,9 +23,9 @@ const updateRestaurantPayload = {
   image: "nova imagem",
   address: "novo endereço 233",
   opening_hours:<OpeningHoursDTO> {
-    of: "9:00",
-    to: "20:00",
-    in: ["SEGUNDA", "TERCA"]
+    hour_open: "08:00",
+    hour_close: "18:00",
+    days_week: ["SEGUNDA", "TERCA"]
   }
 };
 

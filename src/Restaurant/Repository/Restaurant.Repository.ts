@@ -1,11 +1,9 @@
 import { OpeningHours, Restaurant } from "@prisma/client";
-import { Sql } from "@prisma/client/runtime";
 import PrismaRestaurant from "../../prisma/PrismaClient";
 import { CreateRestaurantDTO } from "../dto/CreateRestaurant.dto";
 import { UpdateRestaurantDTO } from "../dto/UpdateRestaurant.dto";
 import { FindRestaurant } from "../interfaces/FindRestaurant.interface";
 import { RestaurantOpeningHoursI } from "../interfaces/RestaurantOpeningHours.interface";
-
 class RestaurantRepository {
   static async createRestaurant(
     restaurant: CreateRestaurantDTO
@@ -22,11 +20,11 @@ class RestaurantRepository {
     >`SELECT * FROM "Restaurant" WHERE restaurant_id = (SELECT MAX(restaurant_id)  FROM "Restaurant")`;
 
     await PrismaRestaurant.$executeRawUnsafe(
-      `insert into "OpeningHours"("of","to", "in",restaurant_id) 
+      `insert into "OpeningHours"("hour_open","hour_close", "days_week",restaurant_id) 
     values ($1, $2, $3, $4)`,
-      opening_hours.of,
-      opening_hours.to,
-      opening_hours.in,
+      opening_hours.hour_open,
+      opening_hours.hour_close,
+      opening_hours.days_week,
       restaurantCreated[0].restaurant_id
     );
 
@@ -34,14 +32,14 @@ class RestaurantRepository {
   }
 
   static async findAllRestaurant(): Promise<FindRestaurant[]> {
-    return await PrismaRestaurant.$queryRaw<
+    return await PrismaRestaurant. $queryRaw<
       FindRestaurant[]
     >`  select "rt".restaurant_id, 
               "rt".name, "rt".address, 
               "rt".image, 
-              "oh".of,  
-              "oh".to, 
-              "oh".in 
+              "oh".hour_open,  
+              "oh".hour_close, 
+              "oh".days_week 
                     from "Restaurant" as "rt" 
                     left join "OpeningHours" as "oh" 
                     on "oh".restaurant_id  = "rt".restaurant_id`;
@@ -57,7 +55,7 @@ class RestaurantRepository {
       OpeningHours[]
     >`select * from "OpeningHours" as "oh" where "oh".restaurant_id = ${restaurant_id}`;
 
-    const findRestaurant: RestaurantOpeningHoursI = {
+    const findRestaurant = {
       ...restaurant[0],
       opening_hours: { ...opening_hours[0] },
     };
@@ -76,9 +74,9 @@ class RestaurantRepository {
         restaurant_id = ${restaurant.restaurant_id}`;
 
     await PrismaRestaurant.$executeRaw`UPDATE "OpeningHours" SET 
-            "of" = ${restaurant.opening_hours.of}, 
-            "to" = ${restaurant.opening_hours.to}, 
-            "in" = ${restaurant.opening_hours.in} 
+            "hour_open" = ${restaurant.opening_hours.hour_open}, 
+            "hour_close" = ${restaurant.opening_hours.hour_close}, 
+            "days_week" = ${restaurant.opening_hours.days_week} 
           WHERE 
             restaurant_id = ${restaurant.restaurant_id}`;
   }

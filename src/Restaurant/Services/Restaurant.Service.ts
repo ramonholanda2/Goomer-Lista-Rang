@@ -1,5 +1,5 @@
 import restaurantRepository from "../Repository/Restaurant.Repository";
-import { DAYS_WEEK, Restaurant } from "@prisma/client";
+import { Restaurant } from "@prisma/client";
 import NotFoundException from "../../Exceptions/NotFoundException";
 import { CreateRestaurantDTO } from "../dto/CreateRestaurant.dto";
 import { RestaurantOpeningHoursI } from "../interfaces/RestaurantOpeningHours.interface";
@@ -62,9 +62,9 @@ class RestaurantService {
       address,
       image,
       name,
-      in: days_week,
-      of,
-      to,
+      days_week,
+      hour_open,
+      hour_close,
     } = restaurant;
 
     return {
@@ -72,25 +72,9 @@ class RestaurantService {
       address,
       image,
       name,
-      opening_hours: { of, to, in: days_week },
+      opening_hours: { hour_open, hour_close, days_week },
     };
   }
-
-/*   static castDaysWeek(days: DAYS_WEEK[] | string): string {
-    let days_week_cast: string = "";
-    if (Array.isArray(days)) {
-      days_week_cast = days_week_cast.concat("{");
-      days
-        .map((day: string) => DAYS_WEEK[day])
-        .forEach((day: DAYS_WEEK) => {
-          days_week_cast = days_week_cast.concat(`"${day}"`);
-        });
-
-        days_week_cast = days_week_cast.concat("}");
-    }
-
-    return days_week_cast;
-  } */
 }
 
 export default RestaurantService;
