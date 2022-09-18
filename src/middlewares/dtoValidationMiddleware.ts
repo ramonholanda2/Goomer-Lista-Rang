@@ -6,10 +6,13 @@ import ArgumentNotValidException from "../Exceptions/ArgumentNotValidException";
 
 function dtoValidationMiddleware(
   type: any,
-  skipMissingProperties = false
+  skipMissingProperties = false,
+  bodyValidation = null
 ): RequestHandler {
   return (req, res, next) => {
-    const dtoObj = plainToClass(type, req.body);
+    const dtoObj = !bodyValidation
+      ? plainToClass(type, req.body)
+      : plainToClass(type, req.body[bodyValidation]);
     validate(dtoObj, { skipMissingProperties }).then(
       (errors: ValidationError[]) => {
         if (errors.length > 0) {
@@ -19,7 +22,11 @@ function dtoValidationMiddleware(
               .values(error.constraints)
               .forEach((message: string) => {
                 errorMessage = errorMessage.concat(
-                  `${error.property}: ${message},`
+                  `${
+                    !bodyValidation
+                      ? error.property
+                      : `${bodyValidation} - ${error.property}`
+                  }: ${message},`
                 );
               });
           });
@@ -32,7 +39,7 @@ function dtoValidationMiddleware(
         } else {
           //sanitize the object and call the next middleware
           sanitize(dtoObj);
-          req.body = dtoObj;
+          !bodyValidation ? (req.body = dtoObj) : req.body;
           next();
         }
       }

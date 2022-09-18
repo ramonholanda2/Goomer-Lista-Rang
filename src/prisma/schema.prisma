@@ -8,11 +8,11 @@ datasource db {
 }
 
 model Restaurant {
-  restaurant_id Int       @id @default(autoincrement())
+  restaurant_id Int           @id @default(autoincrement())
   name          String
   image         String
   address       String
-  opening_hours String
+  opening_hours OpeningHours?
   products      Product[]
 }
 
@@ -37,8 +37,21 @@ model Promotion {
 }
 
 model OpeningHours {
-  opening_hours_id Int    @id @default(autoincrement())
+  opening_hours_id Int         @id @default(autoincrement())
   of               String
   to               String
-  in               String
+  in               String[]
+
+  restaurant    Restaurant @relation(fields: [restaurant_id], references: [restaurant_id])
+  restaurant_id Int        @unique
+}
+
+enum DAYS_WEEK {
+  SEGUNDA
+  TERCA
+  QUARTA
+  QUINTA
+  SEXTA
+  SABADO
+  DOMINGO
 }

@@ -2,12 +2,19 @@ import supertest from "supertest";
 import { describe, it, expect } from "@jest/globals";
 import app from "../../app";
 import RestaurantService from "../Restaurant/Services/Restaurant.Service";
+import { OpeningHours } from "@prisma/client";
+import { OpeningHoursDTO } from "../Restaurant/dto/OpeningHoursDTO";
 
 const restaurantPayload = {
   name: "teste",
   image: "imagem12345",
   address: "endereço 233",
-  opening_hours: "2 as 5",
+  opening_hours: {
+    restaurant_id: Number(),
+    of: "8:00",
+    to: "15:00",
+    in: ["DOMINGO"],
+  }
 };
 
 const updateRestaurantPayload = {
@@ -15,7 +22,11 @@ const updateRestaurantPayload = {
   name: "novo teste",
   image: "nova imagem",
   address: "novo endereço 233",
-  opening_hours: "novo horarios a partir das 8",
+  opening_hours:<OpeningHoursDTO> {
+    of: "9:00",
+    to: "20:00",
+    in: ["SEGUNDA", "TERCA"]
+  }
 };
 
 describe("Restaurant", () => {

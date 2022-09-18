@@ -1,6 +1,7 @@
 import { Restaurant } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { CreateRestaurantDTO } from "../dto/CreateRestaurant.dto";
+import { UpdateRestaurantDTO } from "../dto/UpdateRestaurant.dto";
 import RestaurantService from "../Services/Restaurant.Service";
 class RestaurantController {
   static async createRestaurant(
@@ -50,7 +51,7 @@ class RestaurantController {
     next: NextFunction
   ) {
     try {
-      const restaurant: Restaurant = req.body;
+      const restaurant: UpdateRestaurantDTO = req.body;
       res.status(204).send(await RestaurantService.updateRestaurantById(restaurant));
     } catch (err) {
       next(err);

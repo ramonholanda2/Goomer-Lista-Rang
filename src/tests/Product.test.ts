@@ -3,12 +3,19 @@ import supertest from "supertest";
 import app from "../../app";
 import { ProductService } from "../Product/service/Product.service";
 import RestaurantService from "../Restaurant/Services/Restaurant.Service";
+import { DAYS_WEEK, OpeningHours } from "@prisma/client";
+
+
 
 const restaurantPayload = {
   name: "teste",
   image: "imagem12345",
   address: "endereço 233",
-  opening_hours: "2 as 5",
+  opening_hours:<OpeningHours> {
+    of: "08:00",
+    to: "18:00",
+    in: [],
+  }
 };
 
 const createProductPayload = {
@@ -67,18 +74,19 @@ describe("Product", () => {
       const { product_id } = await ProductService.createProductForRestaurant(
         createProduct
       );
-
+        
+      
       updateProductPayload.product_id = product_id;
       updateProductPayload.restaurant_id = restaurant_id;
-
+      
       const { body, statusCode } = await supertest(app.getApplication())
-        .put(`/products/${product_id}`)
-        .send(updateProductPayload);
-
+      .put(`/products/${product_id}`)
+      .send(updateProductPayload);
+      
       const productUpdated = await ProductService.findProductById(
         product_id
-      );
-
+        );
+        
       expect(statusCode).toBe(204);
       expect(updateProductPayload).toEqual(productUpdated);
 
