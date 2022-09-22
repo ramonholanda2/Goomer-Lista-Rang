@@ -61,6 +61,12 @@ describe("Product", () => {
       );
       await RestaurantService.deleteRestaurantById(restaurant_id);
     });
+
+    it("send body void and return status 400", async () => {
+      await supertest(app.getApplication())
+        .post(`/products`)
+        .send({}).expect(400)
+    })
   });
 
   describe("update product for restaurant", () => {
@@ -97,6 +103,12 @@ describe("Product", () => {
       );
       await RestaurantService.deleteRestaurantById(restaurant_id);
     });
+
+    it("send body void and return status 400", async () => {
+      await supertest(app.getApplication())
+        .put(`/products/id_desconhecido`)
+        .send({}).expect(400)
+    })
   }); 
 
   describe("delete product for restaurant", () => {
@@ -124,5 +136,11 @@ describe("Product", () => {
 
       await RestaurantService.deleteRestaurantById(restaurant_id);
     });
+
+    it("send body void and return status 400", async () => {
+      await supertest(app.getApplication())
+        .delete(`/products/id_desconhecido`)
+        .send({}).expect(400)
+    })
   }); 
 });

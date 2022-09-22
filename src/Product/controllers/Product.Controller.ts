@@ -9,6 +9,8 @@ export class ProductController {
     res: Response,
     next: NextFunction
   ) {
+    // #swagger.tags = ['Products']
+    // #swagger.description = 'Endpoint para criar um produto para um restaurante.'
     try {
       const body: CreateProductDTO = req.body;
       return res
@@ -24,6 +26,8 @@ export class ProductController {
     res: Response,
     next: NextFunction
   ) {
+    // #swagger.tags = ['Products']
+    // #swagger.description = 'Endpoint para buscar um produto de um restaurante.'
     try {
       return res.json(
         await ProductService.findProductByRestaurant(
@@ -40,6 +44,8 @@ export class ProductController {
     res: Response,
     next: NextFunction
   ) {
+    // #swagger.tags = ['Products']
+    // #swagger.description = 'Endpoint atualizar um produto de um restaurante.'
     try {
       const updateProductByRestaurantPayload: CreateProductDTO = req.body;
       return res
@@ -60,9 +66,13 @@ export class ProductController {
     res: Response,
     next: NextFunction
   ) {
+    // #swagger.tags = ['Products']
+    // #swagger.description = 'deleta um produto de um restaurante.'
+
+    
     try {
       const { restaurant_id }: DeleteProductDTO = req.body;
-      const { product_id } = req.params
+      const { product_id } = req.params;
       return res
         .status(204)
         .send(

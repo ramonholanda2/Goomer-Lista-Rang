@@ -11,21 +11,24 @@ class RestaurantRouter implements Router {
 
   constructor() {
     this.router.post(
-      "/",
+      "/restaurants/",
       dtoValidationMiddleware(CreateRestaurantDTO),
       dtoValidationMiddleware(OpeningHoursDTO, false, "opening_hours"),
       restaurantController.createRestaurant
     );
-    this.router.get("/", restaurantController.findAllRestaurant);
-    this.router.get("/:restaurant_id", restaurantController.findRestaurantById);
+    this.router.get("/restaurants/", restaurantController.findAllRestaurant);
+    this.router.get(
+      "/restaurants/:restaurant_id",
+      restaurantController.findRestaurantById
+    );
     this.router.put(
-      "/",
+      "/restaurants/",
       dtoValidationMiddleware(UpdateRestaurantDTO),
       dtoValidationMiddleware(OpeningHoursDTO, false, "opening_hours"),
       restaurantController.updateRestaurantById
     );
     this.router.delete(
-      "/:restaurant_id",
+      "/restaurants/:restaurant_id",
       restaurantController.deleteRestaurantById
     );
   }

@@ -9,22 +9,22 @@ class ProductRouter implements Router {
   public router: express.Router = express.Router();
   constructor() {
     this.router.post(
-      "/",
+      "/products/",
       dtoValidationMiddleware(CreateProductDTO),
       ProductController.createProductForRestaurant
     );
     this.router.put(
-      "/:product_id",
+      "/products/:product_id",
       dtoValidationMiddleware(CreateProductDTO),
       ProductController.updateProductByRestaurant
     );
     this.router.delete(
-      "/:product_id",
+      "/products/:product_id",
       dtoValidationMiddleware(DeleteProductDTO),
       ProductController.deleteProductByRestaurant
     );
     this.router.get(
-      "/",
+      "/products/",
       ProductController.findProductByRestaurant
     );
   }

@@ -9,6 +9,8 @@ class RestaurantController {
     res: Response,
     next: NextFunction
   ) {
+    // #swagger.tags = ['Restaurants']
+    // #swagger.description = 'Endpoint para criar um restaurante.'
     try {
       const body: CreateRestaurantDTO = req.body;
       return res
@@ -24,6 +26,8 @@ class RestaurantController {
     res: Response,
     next: NextFunction
   ) {
+    // #swagger.tags = ['Restaurants']
+    // #swagger.description = 'Endpoint para buscar todos os restaurantes.'
     try {
       return res.json(await RestaurantService.findAllRestaurant());
     } catch (err) {
@@ -32,13 +36,17 @@ class RestaurantController {
   }
 
   static async findRestaurantById(
-    { params }: Request,
+    req: Request,
     res: Response,
     next: NextFunction
   ) {
+    
+    // #swagger.tags = ['Restaurants']
+    // #swagger.description = 'Busca restaurante pelo id'
+
     try {
       return res.json(
-        await RestaurantService.findRestaurantById(Number(params.restaurant_id))
+        await RestaurantService.findRestaurantById(Number(req.params.restaurant_id))
       );
     } catch (err) {
       next(err);
@@ -50,24 +58,34 @@ class RestaurantController {
     res: Response,
     next: NextFunction
   ) {
+    // #swagger.tags = ['Restaurants']
+    // #swagger.description = 'Atualiza restaurante pelo id'
+
     try {
       const restaurant: UpdateRestaurantDTO = req.body;
-      res.status(204).send(await RestaurantService.updateRestaurantById(restaurant));
+      res
+        .status(204)
+        .send(await RestaurantService.updateRestaurantById(restaurant));
     } catch (err) {
       next(err);
     }
   }
 
   static async deleteRestaurantById(
-    { params }: Request,
+    req: Request,
     res: Response,
     next: NextFunction
   ) {
+    
+    // #swagger.tags = ['Restaurants']
+    // #swagger.description = 'Apaga restaurante pelo id'
     try {
       res
         .status(204)
         .json(
-          await RestaurantService.deleteRestaurantById(Number(params.restaurant_id))
+          await RestaurantService.deleteRestaurantById(
+            Number(req.params.restaurant_id)
+          )
         );
     } catch (err) {
       next(err);
