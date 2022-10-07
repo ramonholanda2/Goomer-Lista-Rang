@@ -3,10 +3,7 @@ import supertest from "supertest";
 import app from "../../app";
 import { ProductService } from "../Product/service/Product.service";
 import RestaurantService from "../Restaurant/Services/Restaurant.Service";
-import { OpeningHours } from "@prisma/client";
 import { OpeningHoursDTO } from "../Restaurant/dto/OpeningHoursDTO";
-
-
 
 const restaurantPayload = {
   name: "teste",

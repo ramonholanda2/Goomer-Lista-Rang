@@ -5,12 +5,14 @@ import { CreateRestaurantDTO } from "../dto/CreateRestaurant.dto";
 import { RestaurantOpeningHoursI } from "../interfaces/RestaurantOpeningHours.interface";
 import { FindRestaurant } from "../interfaces/FindRestaurant.interface";
 import { UpdateRestaurantDTO } from "../dto/UpdateRestaurant.dto";
+import ArgumentNotValidException from "../../Exceptions/ArgumentNotValidException";
 
 class RestaurantService {
   static async createRestaurant(
     restaurant: CreateRestaurantDTO
   ): Promise<Restaurant> {
-   
+    const { hour_open, hour_close } = restaurant.opening_hours;
+    this.validateHours(hour_open, hour_close);
     return await restaurantRepository.createRestaurant(restaurant);
   }
 
@@ -43,6 +45,8 @@ class RestaurantService {
     restaurant: UpdateRestaurantDTO
   ): Promise<void> {
     await this.findRestaurantById(restaurant.restaurant_id);
+    const { hour_open, hour_close } = restaurant.opening_hours;
+    this.validateHours(hour_open, hour_close);
     return await restaurantRepository.updateRestaurantById(restaurant);
   }
 
@@ -74,6 +78,28 @@ class RestaurantService {
       name,
       opening_hours: { hour_open, hour_close, days_week },
     };
+  }
+
+  static validateHours(hour_open: string, hour_close: string) {
+    const open_number = Number(hour_open.substring(0, 2));
+    const close_number = Number(hour_close.substring(0, 2));
+
+    if (open_number > close_number) {
+      throw new ArgumentNotValidException(
+        "hour_open tem que ser maior que hour_close"
+      );
+    }
+
+    if (open_number === close_number) {
+      const open_minute = Number(hour_open.substring(3, 5));
+      const close_minute = Number(hour_close.substring(3, 5));
+
+      if (close_minute - open_minute < 15) {
+        throw new ArgumentNotValidException(
+          "mínimo 15 minutos entre horário aberto e fechado"
+        );
+      }
+    }
   }
 }
 

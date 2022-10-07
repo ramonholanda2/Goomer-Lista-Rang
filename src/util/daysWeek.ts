@@ -1,4 +1,4 @@
-export function verifyDaysWeek(days: string[]) {
+export function verifyDaysWeek(days: string[]): boolean {
   const weekday = [
     "segunda",
     "terca",

@@ -3,6 +3,7 @@ import { ProductRepository } from "../repository/Product.Repository";
 import RestaurantService from "../../Restaurant/Services/Restaurant.Service";
 import { CreateProductDTO } from "../dto/CreateProductDTO";
 import NotFoundException from "../../Exceptions/NotFoundException";
+import { CreatePromotionForProduct } from "../dto/CreatePromotionForProduct";
 
 export class ProductService {
   static async createProductForRestaurant(
@@ -45,5 +46,10 @@ export class ProductService {
       );
     }
     return product;
+  }
+
+  static async addPromotionForProduct(promotion: CreatePromotionForProduct): Promise<void> {
+    await this.findProductById(promotion.product_id);
+    return await ProductRepository.addPromotionForProduct(promotion); 
   }
 }

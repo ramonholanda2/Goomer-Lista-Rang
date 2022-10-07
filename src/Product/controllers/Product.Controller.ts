@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { CreateProductDTO } from "../dto/CreateProductDTO";
+import { CreatePromotionForProduct } from "../dto/CreatePromotionForProduct";
 import { DeleteProductDTO } from "../dto/DeleteProductDTO";
 import { ProductService } from "../service/Product.service";
 
@@ -69,7 +70,6 @@ export class ProductController {
     // #swagger.tags = ['Products']
     // #swagger.description = 'deleta um produto de um restaurante.'
 
-    
     try {
       const { restaurant_id }: DeleteProductDTO = req.body;
       const { product_id } = req.params;
@@ -81,6 +81,21 @@ export class ProductController {
             restaurant_id
           )
         );
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async addPromotionForProduct(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const createPromotionBody: CreatePromotionForProduct = req.body;
+      return res
+        .status(201)
+        .send(await ProductService.addPromotionForProduct(createPromotionBody));
     } catch (err) {
       next(err);
     }

@@ -17,30 +17,30 @@ model Restaurant {
 }
 
 model Product {
-  product_id    Int         @id @default(autoincrement())
+  product_id    Int        @id @default(autoincrement())
   restaurant_id Int
   name          String
   image         String
   price         Int
   category      String
-  restaurant    Restaurant  @relation(fields: [restaurant_id], references: [restaurant_id])
-  promotions    Promotion[]
+  restaurant    Restaurant @relation(fields: [restaurant_id], references: [restaurant_id])
+  promotion     Promotion?
 }
 
 model Promotion {
   promotion_id            Int     @id @default(autoincrement())
   description             String
-  price_promotional       Decimal
+  price_promotional       Int
   opening_hours_promotion String
-  product                 Product @relation(fields: [productId], references: [product_id])
-  productId               Int
+  product                 Product @relation(fields: [product_id], references: [product_id])
+  product_id               Int @unique
 }
 
 model OpeningHours {
-  opening_hours_id Int         @id @default(autoincrement())
-  hour_open               String
-  hour_close               String
-  days_week               String[]
+  opening_hours_id Int      @id @default(autoincrement())
+  hour_open        String
+  hour_close       String
+  days_week        String[]
 
   restaurant    Restaurant @relation(fields: [restaurant_id], references: [restaurant_id])
   restaurant_id Int        @unique
@@ -50,7 +50,7 @@ enum DAYS_WEEK {
   SEGUNDA
   TERCA
   QUARTA
-  QUINTA 
+  QUINTA
   SEXTA
   SABADO
   DOMINGO

@@ -4,7 +4,7 @@ import { verifyDaysWeek } from '../../../util/daysWeek';
 export function VerifyDaysWeek(property: string, validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
-      name: 'isLongerThan',
+      name: 'VerifyDaysWeek',
       target: object.constructor,
       propertyName: propertyName,
       constraints: [property],

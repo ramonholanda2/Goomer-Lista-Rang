@@ -1,6 +1,7 @@
 import { Product } from "@prisma/client";
 import PrismaProduct from "../../prisma/PrismaClient";
 import { CreateProductDTO } from "../dto/CreateProductDTO";
+import { CreatePromotionForProduct } from "../dto/CreatePromotionForProduct";
 
 export class ProductRepository {
   static async createProductForRestaurant(
@@ -52,5 +53,14 @@ export class ProductRepository {
     WHERE 
     "pd".product_id = ${product_id}`;
     return product[0];
+  }
+  
+  static async addPromotionForProduct(promotion: CreatePromotionForProduct): Promise<void> {
+    const { description, opening_hours_promotion, price_promotional, product_id } = promotion;
+    console.log(promotion)
+    await PrismaProduct.$executeRaw`INSERT INTO 
+                  "Promotion"(description ,price_promotional, opening_hours_promotion, product_id)  
+                  VALUES 
+                  (${description}, ${price_promotional}, ${JSON.stringify(opening_hours_promotion)}, ${product_id})`;
   }
 }
